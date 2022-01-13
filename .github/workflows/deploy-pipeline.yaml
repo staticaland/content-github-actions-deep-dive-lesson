@@ -77,3 +77,24 @@ jobs:
           asset_path: ./${{ github.sha }}.zip
           asset_name: source_code_with_libraries.zip
           asset_content_type: application/zip
+
+    documentation:
+      runs-on: ubuntu-linux
+      needs: lint
+      steps:
+        - name: Check out code
+          uses: actions/checkout@v2
+
+        - name: Create docs folder
+          runs: mkdir docs
+
+        - name: Convert MD to HTML
+          uses: docker://pandoc/core:2.9
+          with:
+            args: userguide.md -t html -o docs/index.html
+
+        - name: Deploy site
+          uses: JamesIves/github-pages-deploy-action@4.1.4
+          with:
+            folder: docs
+            branch: gh-pages
