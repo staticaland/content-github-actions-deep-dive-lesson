@@ -97,6 +97,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
+      # Hehe
       - name: Create test function
         run: |
             aws lambda create-function --function-name test-function-${{ matrix.input }} \
